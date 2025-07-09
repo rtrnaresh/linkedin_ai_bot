@@ -6,3 +6,4 @@ docx2txt
 pdfplumber
 setuptools
 webdriver-manager
+openai>=1.0.0

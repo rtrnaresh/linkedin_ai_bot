@@ -1,19 +1,25 @@
-import openai
-from dotenv import load_dotenv
+from openai import OpenAI
 import os
+from dotenv import load_dotenv
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def generate_reply(message):
-    prompt = f"You are a polite LinkedIn user. Reply to the following message professionally:\n\nMessage: {message}"
-    response = openai.ChatCompletion.create(
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+def generate_reply(prompt):
+    response = client.chat.completions.create(
         model="gpt-4",
-        messages=[{"role": "user", "content": prompt}]
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
     )
-    return response.choices[0].message.content
+    return response.choices[0].message.content.strip()
 
-# Example use
-message = "Hi, we are hiring Python developers. Are you interested?"
-reply = generate_reply(message)
-print("AI Reply:", reply)
+def auto_reply_messages(driver):
+    print("💬 Auto-reply system ready (stub demo)")
+    messages = ["Hi, are you available for a freelance project?", "Hello! Can you share your resume?"]
+
+    for msg in messages:
+        reply = generate_reply(msg)
+        print(f"📥 Received: {msg}")
+        print(f"📤 Replied: {reply}")
