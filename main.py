@@ -1,5 +1,5 @@
-from bot_modules.login import login_linkedin
-from bot_modules.messages import auto_reply_messages
+from bot_modules.linkedin_login import login_linkedin
+from bot_modules.auto_reply import auto_reply_messages
 from bot_modules.jobs import apply_to_jobs
 from bot_modules.profile import update_profile
 import schedule
@@ -12,8 +12,8 @@ def run_bot():
     update_profile(driver)
     driver.quit()
 
-schedule.every(1).hours.do(run_bot)
+schedule.every(2).hours.do(run_bot)
 
 while True:
     schedule.run_pending()
-    time.sleep(30)
+    time.sleep(1)
