@@ -5,3 +5,4 @@ undetected-chromedriver
 docx2txt
 pdfplumber
 setuptools
+webdriver-manager
