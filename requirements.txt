@@ -1,0 +1,6 @@
+selenium
+openai
+python-dotenv
+undetected-chromedriver
+docx2txt
+pdfplumber
