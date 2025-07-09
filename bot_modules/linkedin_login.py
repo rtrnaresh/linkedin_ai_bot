@@ -1,28 +1,30 @@
-import undetected_chromedriver as uc
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from dotenv import load_dotenv
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import os
+from dotenv import load_dotenv
 
-# Load credentials from .env file
-load_dotenv()
+def login_linkedin():
+    load_dotenv()
+    USERNAME = os.getenv("LINKEDIN_USERNAME")
+    PASSWORD = os.getenv("LINKEDIN_PASSWORD")
 
-USERNAME = os.getenv("LINKEDIN_USERNAME")
-PASSWORD = os.getenv("LINKEDIN_PASSWORD")
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
 
-# Open Chrome browser
-driver = uc.Chrome()
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
-# Open LinkedIn login page
-driver.get("https://www.linkedin.com/login")
-time.sleep(2)
+    driver.get("https://www.linkedin.com/login")
+    time.sleep(2)
 
-# Fill in username and password
-driver.find_element(By.ID, "username").send_keys(USERNAME)
-driver.find_element(By.ID, "password").send_keys(PASSWORD)
+    driver.find_element(By.ID, "username").send_keys(USERNAME)
+    driver.find_element(By.ID, "password").send_keys(PASSWORD)
+    driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
-# Click login
-driver.find_element(By.XPATH, "//button[@type='submit']").click()
-
-print("✅ Logged into LinkedIn successfully!")
+    time.sleep(5)
+    print("✅ Logged into LinkedIn successfully!")
+    return driver
